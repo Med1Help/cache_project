@@ -8,20 +8,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
-@Entity(name = "products")
+@Entity(name = "clients")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Product extends BaseEntity implements Serializable {
-
+public class Client extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String name;
-    private String code;
-    private int quantity;
-    private double price;
-    private String category;
+    private String phone;
+    private String adr;
 }
