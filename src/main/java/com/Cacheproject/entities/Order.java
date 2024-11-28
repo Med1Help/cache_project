@@ -2,6 +2,7 @@ package com.Cacheproject.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedBy;
@@ -14,6 +15,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Builder
 public class Order extends BaseEntity{
 
     @Id
@@ -21,7 +23,7 @@ public class Order extends BaseEntity{
     private Long id;
     @ManyToOne
     private Product product;
-    private Long qte;
+    private Integer qte;
     private String store;
     @ManyToOne
     private Client client;

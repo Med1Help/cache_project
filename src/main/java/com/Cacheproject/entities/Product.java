@@ -24,4 +24,5 @@ public class Product extends BaseEntity implements Serializable {
     private int quantity;
     private double price;
     private String category;
+    private String store;
 }
