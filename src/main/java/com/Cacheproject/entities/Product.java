@@ -16,9 +16,6 @@ import java.io.Serializable;
 @Data
 public class Product extends BaseEntity implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
     private String name;
     private String code;
     private int quantity;

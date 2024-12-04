@@ -18,9 +18,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Builder
 public class Order extends BaseEntity{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     @ManyToOne
     private Product product;
     private Integer qte;

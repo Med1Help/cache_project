@@ -10,6 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
+@MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity implements Serializable {
 

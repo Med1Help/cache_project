@@ -13,9 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class Client extends BaseEntity{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+
     private String name;
     private String phone;
     private String adr;

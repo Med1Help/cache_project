@@ -35,7 +35,7 @@ public class ClientServiceImpl implements ClientService{
     @Override
     public Client updateClient(Long id, ClientDto clientDto) {
         Client client = clientDtoMapper.clientDtoToClient(clientDto);
-        client.setId(id);
+//        client.setId(id);
         return clientRepo.save(client);
     }
 
