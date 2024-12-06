@@ -1,6 +1,7 @@
 package com.Cacheproject.controllers;
 
 import com.Cacheproject.dtos.ClientDto;
+import com.Cacheproject.dtos.PostCommentDto;
 import com.Cacheproject.dtos.ProductPurchaseDto;
 import com.Cacheproject.entities.Order;
 import com.Cacheproject.services.OrderService;
@@ -45,5 +46,10 @@ public class OrderController  {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(orders);
+    }
+
+    @GetMapping("/post-comments")
+    public List<PostCommentDto> getPostComments() {
+        return orderService.postComments();
     }
 }

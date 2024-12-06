@@ -1,6 +1,7 @@
 package com.Cacheproject.controllers;
 
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.Cacheproject.dtos.ClientDto;
@@ -31,8 +32,9 @@ public class ClientController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<Client>> getAllClients() {
+        System.out.println("all clients ");
         List<Client> Clients = clientService.getAllClients();
         return new ResponseEntity<>(Clients, HttpStatus.OK);
     }

@@ -15,16 +15,28 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
-@NoArgsConstructor
 public class OrderService {
 
-    private OrderRepo orderRepo;
-    private ProductService productService;
-    private ClientService clientService;
+    private final OrderRepo orderRepo;
+    private final ProductService productService;
+    private final ClientService clientService;
+    private final PostService postService;
+    private final CommentService commentService;
+
+    public OrderService(OrderRepo orderRepo, ProductService productService, ClientService clientService, CommentService commentService, PostService postService, PostService postService1, CommentService commentService1, PostService postService2, CommentService commentService2) {
+        this.orderRepo = orderRepo;
+        this.productService = productService;
+        this.clientService = clientService;
+        this.postService = postService2;
+        this.commentService = commentService2;
+    }
+
     @Value("${posts-url}")
     private String baseUrl;
 
@@ -56,30 +68,26 @@ public class OrderService {
     }
     public List<PostCommentDto> postComments(){
 
-        RestTemplate restTemplate = new RestTemplate();
+        //get All post from dataase for the first try then from the cache
+        List<Post> posts = postService.getPosts();
 
-        //performe http Ge request to get all posts
-        ResponseEntity<List<Post>> postResponseEntity = restTemplate.exchange(baseUrl+"/posts", HttpMethod.GET,null,new ParameterizedTypeReference<List<Post>>() {});
-        List<Post> posts = postResponseEntity.getBody();
+        //get All comment
+        List<Comment> comments = commentService.getComments();
+        // Mapped with their postIds from database then from the cache
+        Map<Long,List<Comment>> commentsMapped = comments.stream()
+                .collect(Collectors.groupingBy(Comment::getPostId));
 
         List<PostCommentDto>  postCommentsList = new ArrayList<>();
 
         //fetch comments per posts
-        if(posts != null) {
-            for (Post post : posts) {
-                List<String> commentsContent = new ArrayList<>();
-                if (post.getId() == 10) {
-                    break;
-                }
-                ResponseEntity<List<Comment>> commentResponseEntity = restTemplate.exchange(baseUrl + "/posts/" + post.getId() + "/comments", HttpMethod.GET, null, new ParameterizedTypeReference<>() {
-                });
-                List<Comment> comments = commentResponseEntity.getBody();
-                comments.parallelStream().forEach(comment -> {
-                    commentsContent.add(comment.getBody());
-                });
+        if(posts != null)
+            posts.parallelStream().forEach(post -> {
+                List<String> commentsContent = commentsMapped.getOrDefault(post.getId(), Collections.emptyList())
+                        .stream()
+                        .map(Comment::getBody)
+                        .toList();
                 postCommentsList.add(new PostCommentDto(post.getTitle(), commentsContent));
-            }
-        }
+            });
         else return new ArrayList<>();
 
         return postCommentsList;

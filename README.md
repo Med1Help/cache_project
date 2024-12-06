@@ -19,3 +19,5 @@ This repository demonstrates the implementation of caching in a Spring Boot appl
 - Run docker-compose up to start a local Redis instance.
 - Start the Spring Boot application using your preferred IDE or ./mvnw spring-boot:run.
 - Access the application and test cache behavior using predefined endpoints.
+## Test 
+![test-schemas](./testSchema.png)
